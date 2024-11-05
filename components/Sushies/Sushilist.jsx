@@ -8,15 +8,28 @@ const SushiList = () => {
       products: [
         {
           image: "./images/1.webp",
-          title: "mix veggies",
+          title: "سوشی سبزیجات",
           price: "520,000",
-          description: "۸ تکه | ترکیبات سوشی میکس وجی...",
+          description: "۸ تکه | ترکیبات: خیار، آووکادو، و سبزیجات تازه...",
         },
         {
           image: "./images/2.webp",
-          title: "tofu hoso roll",
-          price: "490,000",
-          description: "۸ تکه | ترکیبات سوشی توفو...",
+          title: "سوشی ماهی سالمون",
+          price: "690,000",
+          description:
+            "۸ تکه | ترکیبات: ماهی سالمون، برنج ژاپنی، و چاشنی‌های مخصوص...",
+        },
+        {
+          image: "./images/3.webp",
+          title: "سوشی مرغ تریاکی",
+          price: "550,000",
+          description: "۸ تکه | ترکیبات: مرغ تریاکی، خیار، و کنجد...",
+        },
+        {
+          image: "./images/4.webp",
+          title: "سوشی میگو",
+          price: "750,000",
+          description: "۸ تکه | ترکیبات: میگو تازه، آووکادو، و برنج ژاپنی...",
         },
       ],
     },
@@ -24,16 +37,29 @@ const SushiList = () => {
       categoryName: "دسته دوم",
       products: [
         {
+          image: "./images/1.webp",
+          title: "سوشی تون ماهی",
+          price: "620,000",
+          description: "۸ تکه | ترکیبات: تون ماهی، آووکادو، و برنج ژاپنی...",
+        },
+        {
+          image: "./images/2.webp",
+          title: "سوشی مارماهی",
+          price: "800,000",
+          description: "۸ تکه | ترکیبات: مارماهی، خیار، و سس مخصوص...",
+        },
+        {
           image: "./images/3.webp",
-          title: "کریپسی گرین رول",
-          price: "550,000",
-          description: "۸ تکه | ترکیبات سوشی کریپسی...",
+          title: "سوشی کراب",
+          price: "570,000",
+          description: "۸ تکه | ترکیبات: گوشت کراب، آووکادو، و برنج ژاپنی...",
         },
         {
           image: "./images/4.webp",
-          title: "کیوکمبر هوزو رول",
-          price: "400,000",
-          description: "۸ تکه | ترکیبات سوشی کیوکمبر...",
+          title: "سوشی تخم ماهی",
+          price: "910,000",
+          description:
+            "۸ تکه | ترکیبات: تخم ماهی، آووکادو، و چاشنی‌های مخصوص...",
         },
       ],
     },
