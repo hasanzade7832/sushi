@@ -12,7 +12,7 @@ export default function Home() {
       <div>
         <Header />
         <SushiList />
-        {/* <DetailsProduct /> */}
+        <DetailsProduct />
       </div>
     </CartProvider>
   );
