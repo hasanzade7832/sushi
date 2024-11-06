@@ -37,9 +37,9 @@ export const CartProvider = ({ children }) => {
 
   const getCartItemQuantity = (title) => {
     const item = cartItems.find((item) => item.title === title);
-    return item ? item.quantity : 1;
+    return item ? item.quantity : 0; // Change default quantity from 1 to 0
   };
-
+  
   const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
