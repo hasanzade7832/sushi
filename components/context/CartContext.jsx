@@ -5,6 +5,7 @@ const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
+  const [isItemAdded, setIsItemAdded] = useState(false);
 
   const addToCart = (item) => {
     setCartItems((prevItems) => {
@@ -21,6 +22,9 @@ export const CartProvider = ({ children }) => {
         return [...prevItems, { ...item, quantity: 1 }];
       }
     });
+    // نمایش انیمیشن اضافه شدن
+    setIsItemAdded(true);
+    setTimeout(() => setIsItemAdded(false), 1000); // حذف انیمیشن بعد از یک ثانیه
   };
 
   const updateCartItemQuantity = (title, quantity) => {
@@ -35,7 +39,13 @@ export const CartProvider = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cartItems, addToCart, updateCartItemQuantity, totalItems }}
+      value={{
+        cartItems,
+        addToCart,
+        updateCartItemQuantity,
+        totalItems,
+        isItemAdded,
+      }}
     >
       {children}
     </CartContext.Provider>

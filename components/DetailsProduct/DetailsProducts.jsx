@@ -59,7 +59,7 @@ const ProductPage = () => {
   };
 
   return (
-    <div className="max-w-7xl w-full mx-auto p-8 bg-[#FAF3E0] rounded-xl shadow-lg">
+    <div className="max-w-7xl w-full mx-auto p-8 bg-gradient-to-r from-green-100 via-blue-50 to-teal-100 rounded-xl shadow-lg">
       {/* Main Product Section */}
       <div className="flex flex-col lg:flex-row">
         {/* Right Side - Image Slider */}
@@ -68,17 +68,17 @@ const ProductPage = () => {
             <img
               src={product.images[currentImageIndex]}
               alt={product.title}
-              className="w-full h-full object-cover transition-transform duration-700 ease-in-out transform hover:scale-105"
+              className="w-full h-full object-cover transition-transform duration-500 ease-in-out transform hover:scale-105"
             />
             <button
               onClick={handlePreviousImage}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-red-400 text-white rounded-full p-2 shadow-lg focus:outline-none"
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-teal-400 text-white rounded-full p-2 shadow-lg focus:outline-none"
             >
               {"<"}
             </button>
             <button
               onClick={handleNextImage}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-red-400 text-white rounded-full p-2 shadow-lg focus:outline-none"
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-teal-400 text-white rounded-full p-2 shadow-lg focus:outline-none"
             >
               {">"}
             </button>
@@ -87,10 +87,10 @@ const ProductPage = () => {
 
         {/* Left Side - Product Details */}
         <div className="lg:w-1/2 w-full flex flex-col justify-between p-6">
-          <h2 className="text-3xl font-semibold text-gray-800 mb-4">
+          <h2 className="text-3xl font-semibold text-teal-800 mb-4">
             {product.title}
           </h2>
-          <p className="text-red-500 text-2xl font-bold mb-6">
+          <p className="text-teal-600 text-2xl font-bold mb-6">
             {product.price} تومان
           </p>
           <p className="text-gray-600 text-lg mb-8">{product.description}</p>
@@ -101,7 +101,7 @@ const ProductPage = () => {
             <div className="flex items-center">
               <button
                 onClick={() => handleQuantityChange(-1)}
-                className="px-4 py-2 bg-red-400 text-white rounded-l-md focus:outline-none"
+                className="px-4 py-2 bg-teal-400 text-white rounded-l-md focus:outline-none hover:bg-teal-500 transition duration-200"
               >
                 -
               </button>
@@ -110,7 +110,7 @@ const ProductPage = () => {
               </span>
               <button
                 onClick={() => handleQuantityChange(1)}
-                className="px-4 py-2 bg-green-400 text-white rounded-r-md focus:outline-none"
+                className="px-4 py-2 bg-teal-400 text-white rounded-r-md focus:outline-none hover:bg-teal-500 transition duration-200"
               >
                 +
               </button>
@@ -120,13 +120,13 @@ const ProductPage = () => {
           {/* Add to Cart Button */}
           <Button
             label="افزودن به سبد خرید"
-            className="w-full bg-gradient-to-r from-red-500 to-yellow-400 text-black font-medium py-3 rounded-full hover:from-yellow-500 hover:to-red-500 transition duration-300 transform hover:scale-105"
+            className="w-full bg-gradient-to-r from-green-400 to-teal-400 text-white font-medium py-3 rounded-full hover:from-teal-500 hover:to-green-500 transition duration-300 transform hover:scale-105"
           />
         </div>
       </div>
 
       {/* Related Products Section */}
-      <div className="mt-12 bg-gradient-to-r from-red-500 to-yellow-400 p-8 rounded-lg text-center">
+      <div className="mt-12 bg-gradient-to-r from-teal-400 to-green-400 p-8 rounded-lg text-center">
         <h3 className="text-2xl font-semibold text-white mb-8">
           محصولات مرتبط
         </h3>
@@ -138,7 +138,7 @@ const ProductPage = () => {
               title={product.title}
               price={product.price}
               description={product.description}
-              bgColor="bg-yellow-50"
+              bgColor="bg-teal-50"
             />
           ))}
         </div>

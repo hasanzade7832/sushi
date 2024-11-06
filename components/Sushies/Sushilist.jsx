@@ -1,5 +1,7 @@
+"use client"
+
 import React from "react";
-import SushiItem from "./SushiItem";
+import SushiItem from "../Sushies/SushiItem";
 
 const SushiList = () => {
   const sushiCategories = [
@@ -16,8 +18,7 @@ const SushiList = () => {
           image: "./images/2.webp",
           title: "سوشی ماهی سالمون",
           price: "690,000",
-          description:
-            "۸ تکه | ترکیبات: ماهی سالمون، برنج ژاپنی، و چاشنی‌های مخصوص...",
+          description: "۸ تکه | ترکیبات: ماهی سالمون، برنج ژاپنی، و چاشنی‌های مخصوص...",
         },
         {
           image: "./images/3.webp",
@@ -58,8 +59,7 @@ const SushiList = () => {
           image: "./images/4.webp",
           title: "سوشی تخم ماهی",
           price: "910,000",
-          description:
-            "۸ تکه | ترکیبات: تخم ماهی، آووکادو، و چاشنی‌های مخصوص...",
+          description: "۸ تکه | ترکیبات: تخم ماهی، آووکادو، و چاشنی‌های مخصوص...",
         },
       ],
     },
@@ -70,12 +70,12 @@ const SushiList = () => {
       {sushiCategories.map((category, idx) => (
         <div
           key={idx}
-          className="bg-[#FEF2F2] shadow-lg rounded-xl p-6 sm:p-10 relative mb-8"
+          className="bg-gradient-to-br from-green-100 via-blue-50 to-teal-100 shadow-lg rounded-xl p-6 sm:p-10 relative mb-8"
         >
-          <h2 className="text-2xl font-bold text-white bg-gradient-to-r from-red-500 to-yellow-400 py-3 px-6 rounded-full shadow-lg inline-block absolute right-0 top-[-1.5rem] transform">
+          <h2 className="text-2xl font-bold text-white bg-gradient-to-r from-teal-500 to-green-400 py-3 px-6 rounded-full shadow-lg inline-block absolute right-0 top-[-1.5rem] transform">
             {category.categoryName}
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 mt-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-10">
             {category.products.map((product, index) => (
               <SushiItem
                 key={index}
@@ -83,7 +83,7 @@ const SushiList = () => {
                 title={product.title}
                 price={product.price}
                 description={product.description}
-                bgColor="bg-yellow-50"
+                bgColor="bg-teal-50"
               />
             ))}
           </div>
