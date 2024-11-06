@@ -1,22 +1,31 @@
 "use client";
 import React from "react";
 import { Button } from "primereact/button";
+import { useRouter } from "next/navigation";
 import { useCart } from "../context/CartContext";
 
-const SushiItem = ({ image, title, price, description, bgColor }) => {
+const SushiItem = ({ id, image, title, price, description, bgColor }) => {
+  const router = useRouter();
   const { addToCart, cartItems, updateCartItemQuantity } = useCart();
   const itemInCart = cartItems.find((item) => item.title === title);
   const quantity = itemInCart ? itemInCart.quantity : 0;
 
-  const handleAddToCart = () => {
-    addToCart({ image, title, price });
+  const handleAddToCart = (event) => {
+    event.stopPropagation(); // جلوگیری از هدایت به صفحه جزئیات
+    addToCart({ id, image, title, price });
   };
 
-  const handleIncreaseQuantity = () => {
+  const handleGoToDetails = () => {
+    router.push(`/product/${id}`);
+  };
+
+  const handleIncreaseQuantity = (event) => {
+    event.stopPropagation();
     updateCartItemQuantity(title, quantity + 1);
   };
 
-  const handleDecreaseQuantity = () => {
+  const handleDecreaseQuantity = (event) => {
+    event.stopPropagation();
     if (quantity > 1) {
       updateCartItemQuantity(title, quantity - 1);
     } else {
@@ -27,6 +36,7 @@ const SushiItem = ({ image, title, price, description, bgColor }) => {
   return (
     <div
       className={`border border-gray-300 rounded-xl overflow-hidden shadow-lg transition transform hover:scale-105 hover:shadow-xl max-w-sm ${bgColor}`}
+      onClick={handleGoToDetails} // کلیک روی کل باکس به صفحه جزئیات هدایت می‌شود
     >
       <div className="w-full h-64 overflow-hidden cursor-pointer">
         <img
@@ -64,7 +74,7 @@ const SushiItem = ({ image, title, price, description, bgColor }) => {
           )}
           <Button
             label="افزودن به سبد خرید"
-            className={`w-full bg-gradient-to-r from-green-400 to-teal-400 text-white font-medium py-2 rounded-full transition duration-500 ease-in-out transform hover:scale-105 hover:from-teal-500 hover:to-green-500`}
+            className="w-full bg-gradient-to-r from-green-400 to-teal-400 text-white font-medium py-2 rounded-full transition duration-500 ease-in-out transform hover:scale-105 hover:from-teal-500 hover:to-green-500"
             onClick={handleAddToCart}
           />
         </div>

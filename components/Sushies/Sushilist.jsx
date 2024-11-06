@@ -1,7 +1,6 @@
-"use client"
-
+"use client";
 import React from "react";
-import SushiItem from "../Sushies/SushiItem";
+import SushiItem from "./SushiItem";
 
 const SushiList = () => {
   const sushiCategories = [
@@ -9,25 +8,29 @@ const SushiList = () => {
       categoryName: "دسته اول",
       products: [
         {
-          image: "./images/1.webp",
+          id: 1,
+          image: "/images/1.webp",
           title: "سوشی سبزیجات",
           price: "520,000",
           description: "۸ تکه | ترکیبات: خیار، آووکادو، و سبزیجات تازه...",
         },
         {
-          image: "./images/2.webp",
+          id: 2,
+          image: "/images/2.webp",
           title: "سوشی ماهی سالمون",
           price: "690,000",
           description: "۸ تکه | ترکیبات: ماهی سالمون، برنج ژاپنی، و چاشنی‌های مخصوص...",
         },
         {
-          image: "./images/3.webp",
+          id: 3,
+          image: "/images/3.webp",
           title: "سوشی مرغ تریاکی",
           price: "550,000",
           description: "۸ تکه | ترکیبات: مرغ تریاکی، خیار، و کنجد...",
         },
         {
-          image: "./images/4.webp",
+          id: 4,
+          image: "/images/4.webp",
           title: "سوشی میگو",
           price: "750,000",
           description: "۸ تکه | ترکیبات: میگو تازه، آووکادو، و برنج ژاپنی...",
@@ -38,25 +41,29 @@ const SushiList = () => {
       categoryName: "دسته دوم",
       products: [
         {
-          image: "./images/1.webp",
+          id: 5,
+          image: "/images/1.webp",
           title: "سوشی تون ماهی",
           price: "620,000",
           description: "۸ تکه | ترکیبات: تون ماهی، آووکادو، و برنج ژاپنی...",
         },
         {
-          image: "./images/2.webp",
+          id: 6,
+          image: "/images/2.webp",
           title: "سوشی مارماهی",
           price: "800,000",
           description: "۸ تکه | ترکیبات: مارماهی، خیار، و سس مخصوص...",
         },
         {
-          image: "./images/3.webp",
+          id: 7,
+          image: "/images/3.webp",
           title: "سوشی کراب",
           price: "570,000",
           description: "۸ تکه | ترکیبات: گوشت کراب، آووکادو، و برنج ژاپنی...",
         },
         {
-          image: "./images/4.webp",
+          id: 8,
+          image: "/images/4.webp",
           title: "سوشی تخم ماهی",
           price: "910,000",
           description: "۸ تکه | ترکیبات: تخم ماهی، آووکادو، و چاشنی‌های مخصوص...",
@@ -76,9 +83,10 @@ const SushiList = () => {
             {category.categoryName}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-10">
-            {category.products.map((product, index) => (
+            {category.products.map((product) => (
               <SushiItem
-                key={index}
+                key={product.id}
+                id={product.id}
                 image={product.image}
                 title={product.title}
                 price={product.price}
