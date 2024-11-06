@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { Button } from "primereact/button";
-import { useCart } from "../../components/context/CartContext";
+import { useCart, cartItems } from "../../components/context/CartContext";
 import Link from "next/link";
 
 const SushiItem = ({ id, image, title, price, description, bgColor }) => {
@@ -11,6 +11,8 @@ const SushiItem = ({ id, image, title, price, description, bgColor }) => {
 
   const handleAddToCart = () => {
     addToCart({ image, title, price });
+    console.log(cartItems)
+
   };
 
   const handleIncreaseQuantity = () => {

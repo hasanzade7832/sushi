@@ -1,3 +1,4 @@
+// CartContext.js
 "use client";
 import React, { createContext, useState, useContext } from "react";
 
@@ -7,7 +8,7 @@ export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [isItemAdded, setIsItemAdded] = useState(false);
 
-  const addToCart = (item) => {
+  const addToCart = (item, quantity = 1) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find(
         (cartItem) => cartItem.title === item.title
@@ -15,16 +16,15 @@ export const CartProvider = ({ children }) => {
       if (existingItem) {
         return prevItems.map((cartItem) =>
           cartItem.title === item.title
-            ? { ...cartItem, quantity: cartItem.quantity + 1 }
+            ? { ...cartItem, quantity: cartItem.quantity + quantity }
             : cartItem
         );
       } else {
-        return [...prevItems, { ...item, quantity: 1 }];
+        return [...prevItems, { ...item, quantity }];
       }
     });
-    // نمایش انیمیشن اضافه شدن
     setIsItemAdded(true);
-    setTimeout(() => setIsItemAdded(false), 1000); // حذف انیمیشن بعد از یک ثانیه
+    setTimeout(() => setIsItemAdded(false), 1000);
   };
 
   const updateCartItemQuantity = (title, quantity) => {
@@ -35,6 +35,11 @@ export const CartProvider = ({ children }) => {
     );
   };
 
+  const getCartItemQuantity = (title) => {
+    const item = cartItems.find((item) => item.title === title);
+    return item ? item.quantity : 1;
+  };
+
   const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
@@ -43,6 +48,7 @@ export const CartProvider = ({ children }) => {
         cartItems,
         addToCart,
         updateCartItemQuantity,
+        getCartItemQuantity,
         totalItems,
         isItemAdded,
       }}

@@ -1,5 +1,6 @@
 import "./globals.css";
 import { CartProvider } from "@/components/context/CartContext";
+import Header from "@/components/Header";
 
 export const metadata = {
   title: "coffee shop",
@@ -11,7 +12,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <CartProvider>
-        {children}
+          <Header />
+          <div className="mt-10">
+            {children}
+          </div>
         </CartProvider>
       </body>
     </html>
