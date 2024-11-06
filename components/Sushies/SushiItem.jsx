@@ -1,9 +1,10 @@
 "use client";
 import React from "react";
 import { Button } from "primereact/button";
-import { useCart } from "../context/CartContext";
+import { useCart } from "../../components/context/CartContext";
+import Link from "next/link";
 
-const SushiItem = ({ image, title, price, description, bgColor }) => {
+const SushiItem = ({ id, image, title, price, description, bgColor }) => {
   const { addToCart, cartItems, updateCartItemQuantity } = useCart();
   const itemInCart = cartItems.find((item) => item.title === title);
   const quantity = itemInCart ? itemInCart.quantity : 0;
@@ -25,16 +26,16 @@ const SushiItem = ({ image, title, price, description, bgColor }) => {
   };
 
   return (
-    <div
-      className={`border border-gray-300 rounded-xl overflow-hidden shadow-lg transition transform hover:scale-105 hover:shadow-xl max-w-sm ${bgColor}`}
-    >
-      <div className="w-full h-64 overflow-hidden cursor-pointer">
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-full object-cover transition-transform duration-500 ease-in-out transform hover:scale-110"
-        />
-      </div>
+    <div className={`border border-gray-300 rounded-xl overflow-hidden shadow-lg transition transform hover:scale-105 hover:shadow-xl max-w-sm ${bgColor}`}>
+      <Link href={`/product/${id}`}>
+        <div className="w-full h-64 overflow-hidden cursor-pointer">
+          <img
+            src={image}
+            alt={title}
+            className="w-full h-full object-cover transition-transform duration-500 ease-in-out transform hover:scale-110"
+          />
+        </div>
+      </Link>
       <div className="p-4 text-center flex flex-col justify-between h-[250px]">
         <div>
           <h3 className="text-xl font-semibold mb-2 text-gray-800">{title}</h3>

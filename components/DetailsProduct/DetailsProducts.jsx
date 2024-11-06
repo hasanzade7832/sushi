@@ -1,19 +1,23 @@
 "use client";
 import React, { useState } from "react";
 import { Button } from "primereact/button";
-import SushiItem from "../Sushies/SushiItem"; // فرض کنیم این کامپوننت برای نمایش باکس‌های محصول استفاده می‌شود.
+import SushiItem from "../Sushies/SushiItem";
 
-const ProductPage = () => {
+const ProductPage = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const product = {
+  const defaultProduct = {
     images: ["./images/3.webp", "./images/2.webp", "./images/1.webp"],
     title: "کریپسی گرین رول",
     price: "550,000",
-    description:
-      "۸ تکه | ترکیبات سوشی کریپسی گرین رول با طعمی منحصر به فرد و خوشمزه.",
+    description: "۸ تکه | ترکیبات سوشی کریپسی گرین رول با طعمی منحصر به فرد و خوشمزه.",
   };
+
+  const displayedProduct = product || defaultProduct;
+
+  // اگر displayedProduct.images وجود نداشت، یک آرایه خالی به عنوان مقدار پیش‌فرض استفاده می‌شود
+  const images = displayedProduct.images || [];
 
   const relatedProducts = [
     {
@@ -47,14 +51,12 @@ const ProductPage = () => {
   };
 
   const handleNextImage = () => {
-    setCurrentImageIndex(
-      (prevIndex) => (prevIndex + 1) % product.images.length
-    );
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
   };
 
   const handlePreviousImage = () => {
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? product.images.length - 1 : prevIndex - 1
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
     );
   };
 
@@ -65,20 +67,26 @@ const ProductPage = () => {
         {/* Right Side - Image Slider */}
         <div className="lg:w-1/2 w-full flex items-center justify-center mb-8 lg:mb-0">
           <div className="relative w-full h-96 bg-white rounded-lg overflow-hidden shadow-lg">
-            <img
-              src={product.images[currentImageIndex]}
-              alt={product.title}
-              className="w-full h-full object-cover transition-transform duration-500 ease-in-out transform hover:scale-105"
-            />
+            {images.length > 0 ? (
+              <img
+                src={images[currentImageIndex]}
+                alt={displayedProduct.title}
+                className="w-full h-full object-cover transition-transform duration-500 ease-in-out transform hover:scale-105"
+              />
+            ) : (
+              <p className="text-center">تصویری موجود نیست</p>
+            )}
             <button
               onClick={handlePreviousImage}
               className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-teal-400 text-white rounded-full p-2 shadow-lg focus:outline-none"
+              disabled={images.length === 0}
             >
               {"<"}
             </button>
             <button
               onClick={handleNextImage}
               className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-teal-400 text-white rounded-full p-2 shadow-lg focus:outline-none"
+              disabled={images.length === 0}
             >
               {">"}
             </button>
@@ -88,12 +96,12 @@ const ProductPage = () => {
         {/* Left Side - Product Details */}
         <div className="lg:w-1/2 w-full flex flex-col justify-between p-6">
           <h2 className="text-3xl font-semibold text-teal-800 mb-4">
-            {product.title}
+            {displayedProduct.title}
           </h2>
           <p className="text-teal-600 text-2xl font-bold mb-6">
-            {product.price} تومان
+            {displayedProduct.price} تومان
           </p>
-          <p className="text-gray-600 text-lg mb-8">{product.description}</p>
+          <p className="text-gray-600 text-lg mb-8">{displayedProduct.description}</p>
 
           {/* Quantity Selector */}
           <div className="flex items-center justify-between mb-6">
