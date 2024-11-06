@@ -63,7 +63,7 @@ const SushiList = () => {
           description: "۸ تکه | ترکیبات: گوشت کراب، آووکادو، و برنج ژاپنی...",
         },
         {
-          id:8,
+           
           image: "./images/4.webp",
           title: "سوشی تخم ماهی",
           price: "910,000",
