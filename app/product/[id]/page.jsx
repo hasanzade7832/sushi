@@ -7,17 +7,18 @@ import ProductPage from "../../../components/DetailsProduct/DetailsProducts";
 const sushiCategories = [
   {
     categoryName: "دسته اول",
+    id: 1,
     products: [
       {
         id: 1,
-        images: ["/images/1.webp", "/images/2.webp", "/images/3.webp"], // اضافه کردن چند تصویر برای محصول
+        images: ["/images/1.webp", "/images/2.webp", "/images/3.webp"],
         title: "سوشی سبزیجات",
         price: "520,000",
         description: "۸ تکه | ترکیبات: خیار، آووکادو، و سبزیجات تازه...",
       },
       {
         id: 2,
-        images: ["/images/1.webp", "/images/2.webp"], // اضافه کردن چند تصویر برای محصول
+        images: ["/images/1.webp", "/images/2.webp"],
         title: "سوشی ماهی سالمون",
         price: "690,000",
         description:
@@ -41,6 +42,7 @@ const sushiCategories = [
   },
   {
     categoryName: "دسته دوم",
+    id: 2,
     products: [
       {
         id: 5,
@@ -78,13 +80,17 @@ const ProductDetailPage = () => {
   const { id } = useParams();
   const productId = Number(id);
 
-  const product = sushiCategories
-    .flatMap((category) => category.products)
-    .find((product) => product.id === productId);
+  const category = sushiCategories.find((category) =>
+    category.products.some((product) => product.id === productId)
+  );
+
+  const product = category?.products.find(
+    (product) => product.id === productId
+  );
 
   if (!product) return <p>محصول مورد نظر یافت نشد</p>;
 
-  return <ProductPage product={product} />;
+  return <ProductPage product={product} categoryId={category.id} />;
 };
 
 export default ProductDetailPage;

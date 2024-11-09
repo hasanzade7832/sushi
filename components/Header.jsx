@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState, useEffect, useRef } from "react";
 import { FaShoppingCart, FaSearch, FaBars } from "react-icons/fa";
@@ -7,14 +7,17 @@ import { useCart } from "../components/context/CartContext";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const menuRef = useRef(null);
+  const router = useRouter();
 
-  const { cartItems, addToCart, updateCartItemQuantity, totalItems, isItemAdded } = useCart();
+  const { cartItems, updateCartItemQuantity, totalItems, isItemAdded } =
+    useCart();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -40,8 +43,14 @@ const Header = () => {
     };
   }, []);
 
+  const handleMenuClick = (link) => {
+    if (link) {
+      router.push(`/${link}`);
+    }
+    toggleMenu();
+  };
+
   const menuItems = [
-    { label: "ورود | ثبت‌نام", icon: <BiLogIn />, isLogin: true },
     { label: "نودل", icon: "🍜" },
     { label: "فراید رایس ژاپنی", icon: "🍚" },
     { label: "پیش غذا", icon: "🥟" },
@@ -50,16 +59,14 @@ const Header = () => {
     { label: "نوشیدنی", icon: "🍹" },
     { label: "موچی", icon: "🍡" },
     { label: "بشقاب سوشی", icon: "🍣" },
-    { label: "سینی سوشی پارتی", icon: "🍣" },
-    { label: "اونیکیری", icon: "🍙" },
-    { label: "هاروماکی", icon: "🥠" },
-    { label: "سوشی برگر", icon: "🍔" },
-    { label: "کریسپی رایس", icon: "🍚" },
-    { label: "ساشیمی", icon: "🐟" },
-    { label: "نگیری", icon: "🍣" },
-    { label: "سوشی سبزیجات", icon: "🥬" },
-    { label: "سوشی مرغ و گوشت", icon: "🍖" },
-    { label: "سوشی دریایی", icon: "🐙" },
+    { label: "اونیکیری", icon: "🍙", link: "product#category-3" },
+    { label: "هاروماکی", icon: "🥠", link: "product#category-2" },
+    { label: "سوشی برگر", icon: "🍔", link: "product#category-1" },
+  ];
+
+  const hamburgerMenuItems = [
+    { label: "ورود | ثبت‌نام", icon: <BiLogIn />, link: "login" },
+    ...menuItems, // افزودن بقیه آیتم‌های منوی اصلی
   ];
 
   return (
@@ -80,7 +87,10 @@ const Header = () => {
             )}
           </button>
           <div className="h-8 border-l-2 border-gray-300 mx-4 rtl:border-r-2 rtl:border-l-0"></div>
-          <button className="p-button-outlined bg-white text-teal-500 border-2 border-teal-500 hover:bg-teal-400 hover:bg-opacity-80 hover:text-white flex items-center px-4 py-2 rounded-full text-base cursor-pointer transition duration-300">
+          <button
+            className="p-button-outlined bg-white text-teal-500 border-2 border-teal-500 hover:bg-teal-400 hover:bg-opacity-80 hover:text-white flex items-center px-4 py-2 rounded-full text-base cursor-pointer transition duration-300"
+            onClick={() => handleMenuClick("login")}
+          >
             <BiLogIn className="text-lg ml-2" />
             <span>ورود | ثبت‌نام</span>
           </button>
@@ -136,12 +146,12 @@ const Header = () => {
         </div>
       </header>
 
-      {/* Menu Section */}
       <nav className="bg-gradient-to-r from-green-300 via-blue-200 to-teal-300 py-2 shadow-md">
         <ul className="hidden sm:flex flex-wrap justify-center gap-4">
-          {menuItems.slice(1).map((item, index) => (
+          {menuItems.map((item, index) => (
             <li
               key={index}
+              onClick={() => handleMenuClick(item.link)}
               className="flex items-center space-x-1 rtl:space-x-reverse text-teal-700 text-sm sm:text-base font-medium no-underline hover:bg-teal-400 hover:bg-opacity-80 hover:text-white rounded-full px-3 py-1 cursor-pointer transition-colors duration-300 ease-in-out"
             >
               <span className="text-lg">{item.icon}</span>
@@ -151,7 +161,6 @@ const Header = () => {
         </ul>
       </nav>
 
-      {/* Cart Sidebar */}
       <div
         className={`fixed top-0 left-0 w-64 h-full bg-white shadow-lg transform transition-transform duration-500 ease-in-out z-50 ${
           isCartOpen ? "translate-x-0" : "-translate-x-full"
@@ -176,11 +185,17 @@ const Header = () => {
                   className="w-12 h-12 rounded-full"
                 />
                 <div className="flex flex-col flex-grow ml-4">
-                  <span className="font-semibold text-gray-700">{item.title}</span>
-                  <span className="text-gray-500">قیمت: {item.price} تومان</span>
+                  <span className="font-semibold text-gray-700">
+                    {item.title}
+                  </span>
+                  <span className="text-gray-500">
+                    قیمت: {item.price} تومان
+                  </span>
                   <div className="flex items-center mt-2">
                     <button
-                      onClick={() => updateCartItemQuantity(item.title, item.quantity - 1)}
+                      onClick={() =>
+                        updateCartItemQuantity(item.title, item.quantity - 1)
+                      }
                       className="px-2 py-1 bg-teal-200 rounded-l-md hover:bg-teal-300 transition duration-200"
                     >
                       -
@@ -189,7 +204,9 @@ const Header = () => {
                       {item.quantity}
                     </span>
                     <button
-                      onClick={() => updateCartItemQuantity(item.title, item.quantity + 1)}
+                      onClick={() =>
+                        updateCartItemQuantity(item.title, item.quantity + 1)
+                      }
                       className="px-2 py-1 bg-teal-200 rounded-r-md hover:bg-teal-300 transition duration-200"
                     >
                       +
@@ -209,7 +226,6 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Hamburger Menu for Mobile */}
       <div
         className={`sm:hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end transition-opacity duration-300 ${
           isMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -228,10 +244,10 @@ const Header = () => {
             ✖
           </button>
           <ul className="flex flex-col items-end p-4 space-y-4 text-right">
-            {menuItems.map((item, index) => (
+            {hamburgerMenuItems.map((item, index) => (
               <li
                 key={index}
-                onClick={toggleMenu}
+                onClick={() => handleMenuClick(item.link)}
                 className="flex items-center justify-end space-x-1 rtl:space-x-reverse text-teal-700 text-sm font-medium hover:bg-teal-400 hover:bg-opacity-80 hover:text-white rounded-full px-3 py-1 cursor-pointer transition-colors duration-300 ease-in-out"
               >
                 <span className="text-lg">{item.icon}</span>

@@ -3,8 +3,9 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "primereact/button";
 import { useCart } from "../context/CartContext";
+import RelatedProduct from "./RelatedProducts";
 
-const ProductPage = ({ product }) => {
+const ProductPage = ({ product, categoryId }) => {
   const { addToCart, updateCartItemQuantity, getCartItemQuantity } = useCart();
   const [quantity, setQuantity] = useState(0);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -13,22 +14,20 @@ const ProductPage = ({ product }) => {
   useEffect(() => {
     const initialQuantity = getCartItemQuantity(product.title);
     setQuantity(initialQuantity);
-    setShowQuantity(initialQuantity > 0); // Show quantity selector only if quantity > 0
+    setShowQuantity(initialQuantity > 0);
   }, [product.title, getCartItemQuantity]);
 
   const images = product.images || (product.image ? [product.image] : []);
 
   const handleQuantityChange = (delta) => {
     const newQuantity = quantity + delta;
-
     if (newQuantity > 0) {
       setQuantity(newQuantity);
-      setShowQuantity(true); // Show selector when quantity > 0
+      setShowQuantity(true);
     } else {
       setQuantity(0);
-      setShowQuantity(false); // Hide selector when quantity is 0
+      setShowQuantity(false);
     }
-
     updateCartItemQuantity(product.title, Math.max(newQuantity, 0));
   };
 
@@ -45,14 +44,94 @@ const ProductPage = ({ product }) => {
   const handleAddToCart = () => {
     if (quantity === 0) {
       setQuantity(1);
-      setShowQuantity(true); // Show selector when adding to cart with quantity 1
+      setShowQuantity(true);
     }
     addToCart({ ...product, quantity: Math.max(quantity, 1) });
   };
 
+  // Categories data
+  const sushiCategories = [
+    {
+      id: 1,
+      products: [
+        {
+          id: 1,
+          image: "/images/1.webp",
+          title: "سوشی سبزیجات",
+          price: "520,000",
+          description: "۸ تکه | ترکیبات: خیار، آووکادو، و سبزیجات تازه...",
+        },
+        {
+          id: 2,
+          image: "/images/2.webp",
+          title: "سوشی ماهی سالمون",
+          price: "690,000",
+          description:
+            "۸ تکه | ترکیبات: ماهی سالمون، برنج ژاپنی، و چاشنی‌های مخصوص...",
+        },
+        {
+          id: 3,
+          image: "/images/3.webp",
+          title: "سوشی مرغ تریاکی",
+          price: "550,000",
+          description: "۸ تکه | ترکیبات: مرغ تریاکی، خیار، و کنجد...",
+        },
+        {
+          id: 4,
+          image: "/images/4.webp",
+          title: "سوشی میگو",
+          price: "750,000",
+          description: "۸ تکه | ترکیبات: میگو تازه، آووکادو، و برنج ژاپنی...",
+        },
+      ],
+    },
+    {
+      id: 2,
+      products: [
+        {
+          id: 5,
+          image: "/images/1.webp",
+          title: "سوشی تون ماهی",
+          price: "620,000",
+          description: "۸ تکه | ترکیبات: تون ماهی، آووکادو، و برنج ژاپنی...",
+        },
+        {
+          id: 6,
+          image: "/images/2.webp",
+          title: "سوشی مارماهی",
+          price: "800,000",
+          description: "۸ تکه | ترکیبات: مارماهی، خیار، و سس مخصوص...",
+        },
+        {
+          id: 7,
+          image: "/images/3.webp",
+          title: "سوشی کراب",
+          price: "570,000",
+          description: "۸ تکه | ترکیبات: گوشت کراب، آووکادو، و برنج ژاپنی...",
+        },
+        {
+          id: 8,
+          image: "/images/4.webp",
+          title: "سوشی تخم ماهی",
+          price: "910,000",
+          description:
+            "۸ تکه | ترکیبات: تخم ماهی، آووکادو، و چاشنی‌های مخصوص...",
+        },
+      ],
+    },
+  ];
+
+  // Filtering related products
+  const relatedProducts =
+    sushiCategories
+      .find((category) => category.id === categoryId)
+      ?.products.slice(0, 4) || [];
+
   return (
     <div className="max-w-7xl w-full mx-auto p-8 bg-gradient-to-r from-green-100 via-blue-50 to-teal-100 rounded-xl shadow-lg">
+      {/* Product Details Section */}
       <div className="flex flex-col lg:flex-row">
+        {/* Image Carousel */}
         <div className="lg:w-1/2 w-full flex items-center justify-center mb-8 lg:mb-0">
           <div className="relative w-full h-96 bg-white rounded-lg overflow-hidden shadow-lg">
             {images.length > 0 ? (
@@ -64,7 +143,6 @@ const ProductPage = ({ product }) => {
             ) : (
               <p className="text-center">تصویری موجود نیست</p>
             )}
-            {/* دکمه‌های ناوبری فقط در صورتی نمایش داده می‌شوند که تعداد تصاویر بیشتر از 1 باشد */}
             {images.length > 1 && (
               <>
                 <button
@@ -84,6 +162,7 @@ const ProductPage = ({ product }) => {
           </div>
         </div>
 
+        {/* Product Info */}
         <div className="lg:w-1/2 w-full flex flex-col justify-center items-center p-6 text-center">
           <h2 className="text-3xl font-semibold text-teal-800 mb-4">
             {product.title}
@@ -93,14 +172,13 @@ const ProductPage = ({ product }) => {
           </p>
           <p className="text-gray-600 text-lg mb-8">{product.description}</p>
 
-          {/* Quantity and Add to Cart button */}
           <div className="flex items-center space-x-2 rtl:space-x-reverse">
             {showQuantity && (
               <div className="flex items-center bg-gray-100 rounded-md">
                 <button
                   onClick={() => handleQuantityChange(-1)}
                   className="px-4 py-2 bg-teal-400 text-white rounded-l-md focus:outline-none hover:bg-teal-500 transition duration-200"
-                  disabled={quantity === 0} // Disable "-" button when quantity is 0
+                  disabled={quantity === 0}
                 >
                   -
                 </button>
@@ -122,6 +200,26 @@ const ProductPage = ({ product }) => {
               onClick={handleAddToCart}
             />
           </div>
+        </div>
+      </div>
+
+      {/* Related Products Section */}
+      <div className="mt-12">
+        <h3 className="text-2xl font-semibold text-teal-800 mb-6 text-center">
+          محصولات مرتبط
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {relatedProducts.map((relatedProduct) => (
+            <RelatedProduct
+              key={relatedProduct.id}
+              id={relatedProduct.id}
+              image={relatedProduct.image}
+              title={relatedProduct.title}
+              price={relatedProduct.price}
+              description={relatedProduct.description}
+              bgColor="bg-teal-50"
+            />
+          ))}
         </div>
       </div>
     </div>
