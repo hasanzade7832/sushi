@@ -64,20 +64,23 @@ const ProductPage = ({ product }) => {
             ) : (
               <p className="text-center">تصویری موجود نیست</p>
             )}
-            <button
-              onClick={handlePreviousImage}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-teal-400 text-white rounded-full p-2 shadow-lg focus:outline-none"
-              disabled={images.length === 0}
-            >
-              {"<"}
-            </button>
-            <button
-              onClick={handleNextImage}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-teal-400 text-white rounded-full p-2 shadow-lg focus:outline-none"
-              disabled={images.length === 0}
-            >
-              {">"}
-            </button>
+            {/* دکمه‌های ناوبری فقط در صورتی نمایش داده می‌شوند که تعداد تصاویر بیشتر از 1 باشد */}
+            {images.length > 1 && (
+              <>
+                <button
+                  onClick={handlePreviousImage}
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-teal-400 text-white rounded-full p-2 shadow-lg focus:outline-none"
+                >
+                  {"<"}
+                </button>
+                <button
+                  onClick={handleNextImage}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-teal-400 text-white rounded-full p-2 shadow-lg focus:outline-none"
+                >
+                  {">"}
+                </button>
+              </>
+            )}
           </div>
         </div>
 
