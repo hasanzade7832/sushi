@@ -71,6 +71,39 @@ const SushiList = () => {
         },
       ],
     },
+    {
+      categoryName: "دسته سوم",
+      products: [
+        {
+          id:5,
+          image: "/images/1.webp",
+          title: "سوشی تون ماهی",
+          price: "620,000",
+          description: "۸ تکه | ترکیبات: تون ماهی، آووکادو، و برنج ژاپنی...",
+        },
+        {
+          id:6,
+          image: "/images/2.webp",
+          title: "سوشی مارماهی",
+          price: "800,000",
+          description: "۸ تکه | ترکیبات: مارماهی، خیار، و سس مخصوص...",
+        },
+        {
+          id:7,
+          image: "/images/3.webp",
+          title: "سوشی کراب",
+          price: "570,000",
+          description: "۸ تکه | ترکیبات: گوشت کراب، آووکادو، و برنج ژاپنی...",
+        },
+        {
+          id:8,
+          image: "/images/4.webp",
+          title: "سوشی تخم ماهی",
+          price: "910,000",
+          description: "۸ تکه | ترکیبات: تخم ماهی، آووکادو، و چاشنی‌های مخصوص...",
+        },
+      ],
+    },
   ];
 
   return (
