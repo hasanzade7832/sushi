@@ -4,12 +4,14 @@ import React, { useState, useEffect } from "react";
 import { Button } from "primereact/button";
 import { useCart } from "../context/CartContext";
 import RelatedProduct from "./RelatedProducts";
+import Comments from "./Comments";
 
 const ProductPage = ({ product, categoryId }) => {
   const { addToCart, updateCartItemQuantity, getCartItemQuantity } = useCart();
   const [quantity, setQuantity] = useState(0);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showQuantity, setShowQuantity] = useState(false);
+  const [activeSection, setActiveSection] = useState("related"); // default to "related" section
 
   useEffect(() => {
     const initialQuantity = getCartItemQuantity(product.title);
@@ -128,7 +130,7 @@ const ProductPage = ({ product, categoryId }) => {
       ?.products.slice(0, 4) || [];
 
   return (
-    <div className="max-w-7xl w-full mx-auto p-8 bg-gradient-to-r from-green-100 via-blue-50 to-teal-100 rounded-xl shadow-lg">
+    <div className="max-w-7xl w-full mx-auto p-8 bg-gradient-to-r from-green-100 via-blue-50 to-teal-100 rounded-xl shadow-lg rtl">
       {/* Product Details Section */}
       <div className="flex flex-col lg:flex-row">
         {/* Image Carousel */}
@@ -203,25 +205,48 @@ const ProductPage = ({ product, categoryId }) => {
         </div>
       </div>
 
-      {/* Related Products Section */}
-      <div className="mt-12">
-        <h3 className="text-2xl font-semibold text-teal-800 mb-6 text-center">
-          محصولات مرتبط
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {relatedProducts.map((relatedProduct) => (
-            <RelatedProduct
-              key={relatedProduct.id}
-              id={relatedProduct.id}
-              image={relatedProduct.image}
-              title={relatedProduct.title}
-              price={relatedProduct.price}
-              description={relatedProduct.description}
-              bgColor="bg-teal-50"
-            />
-          ))}
-        </div>
+      {/* Related Products and Comments Buttons */}
+      <div className="mt-12 flex justify-center space-x-4 rtl:space-x-reverse">
+        <Button
+          label="مشاهده نظرات"
+          className={`${
+            activeSection === "comments" ? "bg-pink-600" : "bg-purple-400"
+          } text-white font-medium py-2 px-4 rounded hover:bg-pink-500 transition duration-300`}
+          onClick={() => setActiveSection("comments")}
+        />
+        <Button
+          label="محصولات مرتبط"
+          className={`${
+            activeSection === "related" ? "bg-indigo-600" : "bg-blue-400"
+          } text-white font-medium py-2 px-4 rounded hover:bg-indigo-500 transition duration-300`}
+          onClick={() => setActiveSection("related")}
+        />
       </div>
+
+      {/* Conditional Rendering of Sections */}
+      {activeSection === "related" && (
+        <div className="mt-8 bg-white rounded-lg shadow-lg p-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {relatedProducts.map((relatedProduct) => (
+              <RelatedProduct
+                key={relatedProduct.id}
+                id={relatedProduct.id}
+                image={relatedProduct.image}
+                title={relatedProduct.title}
+                price={relatedProduct.price}
+                description={relatedProduct.description}
+                bgColor="bg-teal-50"
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {activeSection === "comments" && (
+        <div className="mt-8 bg-white rounded-lg shadow-lg p-8">
+          <Comments productId={product.id} />
+        </div>
+      )}
     </div>
   );
 };
