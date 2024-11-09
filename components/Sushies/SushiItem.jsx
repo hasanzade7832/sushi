@@ -15,11 +15,17 @@ const SushiItem = ({ id, image, title, price, description, bgColor }) => {
 
   };
 
-  const handleIncreaseQuantity = () => {
+  const handleGoToDetails = () => {
+    router.push(`/product/${id}`);
+  };
+
+  const handleIncreaseQuantity = (event) => {
+    event.stopPropagation();
     updateCartItemQuantity(title, quantity + 1);
   };
 
-  const handleDecreaseQuantity = () => {
+  const handleDecreaseQuantity = (event) => {
+    event.stopPropagation();
     if (quantity > 1) {
       updateCartItemQuantity(title, quantity - 1);
     } else {
@@ -28,16 +34,17 @@ const SushiItem = ({ id, image, title, price, description, bgColor }) => {
   };
 
   return (
-    <div className={`border border-gray-300 rounded-xl overflow-hidden shadow-lg transition transform hover:scale-105 hover:shadow-xl max-w-sm ${bgColor}`}>
-      <Link href={`/product/${id}`}>
-        <div className="w-full h-64 overflow-hidden cursor-pointer">
-          <img
-            src={image}
-            alt={title}
-            className="w-full h-full object-cover transition-transform duration-500 ease-in-out transform hover:scale-110"
-          />
-        </div>
-      </Link>
+    <div
+      className={`border border-gray-300 rounded-xl overflow-hidden shadow-lg transition transform hover:scale-105 hover:shadow-xl max-w-sm ${bgColor}`}
+      onClick={handleGoToDetails} // کلیک روی کل باکس به صفحه جزئیات هدایت می‌شود
+    >
+      <div className="w-full h-64 overflow-hidden cursor-pointer">
+        <img
+          src={image}
+          alt={title}
+          className="w-full h-full object-cover transition-transform duration-500 ease-in-out transform hover:scale-110"
+        />
+      </div>
       <div className="p-4 text-center flex flex-col justify-between h-[250px]">
         <div>
           <h3 className="text-xl font-semibold mb-2 text-gray-800">{title}</h3>
@@ -67,7 +74,7 @@ const SushiItem = ({ id, image, title, price, description, bgColor }) => {
           )}
           <Button
             label="افزودن به سبد خرید"
-            className={`w-full bg-gradient-to-r from-green-400 to-teal-400 text-white font-medium py-2 rounded-full transition duration-500 ease-in-out transform hover:scale-105 hover:from-teal-500 hover:to-green-500`}
+            className="w-full bg-gradient-to-r from-green-400 to-teal-400 text-white font-medium py-2 rounded-full transition duration-500 ease-in-out transform hover:scale-105 hover:from-teal-500 hover:to-green-500"
             onClick={handleAddToCart}
           />
         </div>
