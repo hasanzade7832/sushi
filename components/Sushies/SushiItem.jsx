@@ -1,18 +1,19 @@
 "use client";
 import React from "react";
 import { Button } from "primereact/button";
-import { useCart, cartItems } from "../../components/context/CartContext";
+import { useCart } from "../../components/context/CartContext";
+import { useRouter } from "next/navigation"; // Import useRouter
 import Link from "next/link";
 
 const SushiItem = ({ id, image, title, price, description, bgColor }) => {
   const { addToCart, cartItems, updateCartItemQuantity } = useCart();
+  const router = useRouter(); // Initialize useRouter
   const itemInCart = cartItems.find((item) => item.title === title);
   const quantity = itemInCart ? itemInCart.quantity : 0;
 
   const handleAddToCart = () => {
     addToCart({ image, title, price });
-    console.log(cartItems)
-
+    console.log(cartItems);
   };
 
   const handleGoToDetails = () => {
@@ -36,7 +37,7 @@ const SushiItem = ({ id, image, title, price, description, bgColor }) => {
   return (
     <div
       className={`border border-gray-300 rounded-xl overflow-hidden shadow-lg transition transform hover:scale-105 hover:shadow-xl max-w-sm ${bgColor}`}
-      onClick={handleGoToDetails} // کلیک روی کل باکس به صفحه جزئیات هدایت می‌شود
+      onClick={handleGoToDetails} // Navigate to details on click
     >
       <div className="w-full h-64 overflow-hidden cursor-pointer">
         <img
@@ -75,7 +76,7 @@ const SushiItem = ({ id, image, title, price, description, bgColor }) => {
           <Button
             label="افزودن به سبد خرید"
             className="w-full bg-gradient-to-r from-green-400 to-teal-400 text-white font-medium py-2 rounded-full transition duration-500 ease-in-out transform hover:scale-105 hover:from-teal-500 hover:to-green-500"
-            onClick={handleAddToCart}
+            onClick={(e) => { e.stopPropagation(); handleAddToCart(); }}
           />
         </div>
       </div>
