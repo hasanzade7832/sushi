@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
       <body>
         <CartProvider>
           <Header />
-          <div className="mt-10">
+          <div className="mt-1">
             {children}
           </div>
         </CartProvider>
