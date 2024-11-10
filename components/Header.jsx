@@ -1,3 +1,4 @@
+// Header.js
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
@@ -16,8 +17,7 @@ const Header = () => {
   const menuRef = useRef(null);
   const router = useRouter();
 
-  const { cartItems, updateCartItemQuantity, totalItems, isItemAdded } =
-    useCart();
+  const { cartItems, updateCartItemQuantity, totalItems, isItemAdded } = useCart();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -66,7 +66,7 @@ const Header = () => {
 
   const hamburgerMenuItems = [
     { label: "ورود | ثبت‌نام", icon: <BiLogIn />, link: "login" },
-    ...menuItems, // افزودن بقیه آیتم‌های منوی اصلی
+    ...menuItems,
   ];
 
   return (
@@ -161,6 +161,7 @@ const Header = () => {
         </ul>
       </nav>
 
+      {/* سایدبار سبد خرید */}
       <div
         className={`fixed top-0 left-0 w-64 h-full bg-white shadow-lg transform transition-transform duration-500 ease-in-out z-50 ${
           isCartOpen ? "translate-x-0" : "-translate-x-full"
@@ -220,41 +221,12 @@ const Header = () => {
           )}
         </div>
         <div className="p-4 border-t">
-          <button className="w-full bg-gradient-to-r from-teal-400 to-green-400 text-white py-2 rounded-full hover:bg-teal-500 transition duration-300">
+          <button
+            className="w-full bg-gradient-to-r from-teal-400 to-green-400 text-white py-2 rounded-full hover:bg-teal-500 transition duration-300"
+            onClick={() => router.push("/checkout")} // هدایت به صفحه‌ی تکمیل خرید
+          >
             تسویه حساب
           </button>
-        </div>
-      </div>
-
-      <div
-        className={`sm:hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end transition-opacity duration-300 ${
-          isMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-      >
-        <div
-          ref={menuRef}
-          className={`fixed top-0 right-0 w-64 h-full bg-gradient-to-r from-green-300 via-blue-200 to-teal-300 z-50 shadow-lg transform transition-transform duration-500 ease-in-out ${
-            isMenuOpen ? "translate-x-0" : "translate-x-full"
-          }`}
-        >
-          <button
-            className="text-teal-700 p-4 focus:outline-none text-lg cursor-pointer hover:bg-teal-400 hover:bg-opacity-80 rounded-full transition duration-300"
-            onClick={toggleMenu}
-          >
-            ✖
-          </button>
-          <ul className="flex flex-col items-end p-4 space-y-4 text-right">
-            {hamburgerMenuItems.map((item, index) => (
-              <li
-                key={index}
-                onClick={() => handleMenuClick(item.link)}
-                className="flex items-center justify-end space-x-1 rtl:space-x-reverse text-teal-700 text-sm font-medium hover:bg-teal-400 hover:bg-opacity-80 hover:text-white rounded-full px-3 py-1 cursor-pointer transition-colors duration-300 ease-in-out"
-              >
-                <span className="text-lg">{item.icon}</span>
-                <span>{item.label}</span>
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </div>

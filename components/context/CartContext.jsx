@@ -35,9 +35,13 @@ export const CartProvider = ({ children }) => {
     );
   };
 
+  const removeFromCart = (title) => {
+    setCartItems((prevItems) => prevItems.filter((item) => item.title !== title));
+  };
+
   const getCartItemQuantity = (title) => {
     const item = cartItems.find((item) => item.title === title);
-    return item ? item.quantity : 0; // Change default quantity from 1 to 0
+    return item ? item.quantity : 0;
   };
   
   const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
@@ -48,6 +52,7 @@ export const CartProvider = ({ children }) => {
         cartItems,
         addToCart,
         updateCartItemQuantity,
+        removeFromCart, // اضافه کردن تابع حذف به context
         getCartItemQuantity,
         totalItems,
         isItemAdded,
