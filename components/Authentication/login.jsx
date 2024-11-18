@@ -37,7 +37,9 @@ const Login = () => {
   return (
     <div className="flex items-center justify-center bg-gradient-to-r from-green-300 via-blue-200 to-teal-300 ">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-teal-700 text-center">ورود</h2>
+        <h2 className="text-2xl font-bold mb-6 text-teal-700 text-center">
+          ورود
+        </h2>
         <form onSubmit={handleSubmit} className="text-right">
           <div className="mb-4">
             <div className="flex items-center">
@@ -45,12 +47,16 @@ const Login = () => {
               <InputText
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className={`w-full border px-3 py-2 text-right placeholder-right ${errors.username ? "p-invalid" : ""}`}
+                className={`w-full border px-3 py-2 text-right placeholder-right ${
+                  errors.username ? "p-invalid" : ""
+                }`}
                 placeholder="نام کاربری"
               />
             </div>
             {errors.username && (
-              <small className="text-red-500 block mt-1 text-right">{errors.username}</small>
+              <small className="text-red-500 block mt-1 text-right">
+                {errors.username}
+              </small>
             )}
           </div>
           <div className="mb-6">
@@ -60,12 +66,16 @@ const Login = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`w-full border px-3 py-2 text-right placeholder-right ${errors.password ? "p-invalid" : ""}`}
+                className={`w-full border px-3 py-2 text-right placeholder-right ${
+                  errors.password ? "p-invalid" : ""
+                }`}
                 placeholder="رمز عبور"
               />
             </div>
             {errors.password && (
-              <small className="text-red-500 block mt-1 text-right">{errors.password}</small>
+              <small className="text-red-500 block mt-1 text-right">
+                {errors.password}
+              </small>
             )}
           </div>
           <Button
@@ -81,7 +91,9 @@ const Login = () => {
           >
             ثبت‌نام
           </button>
-          <span className="text-gray-700 ml-2">آیا هنوز ثبت‌نام نکرده‌اید؟</span>
+          <span className="text-gray-700 ml-2">
+            آیا هنوز ثبت‌نام نکرده‌اید؟
+          </span>
         </div>
       </div>
     </div>
