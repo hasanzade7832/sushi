@@ -1,12 +1,25 @@
 // CartContext.js
 "use client";
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [isItemAdded, setIsItemAdded] = useState(false);
+
+  // Load cart from Local Storage on initial render
+  useEffect(() => {
+    const savedCart = localStorage.getItem("cartItems");
+    if (savedCart) {
+      setCartItems(JSON.parse(savedCart));
+    }
+  }, []);
+
+  // Save cart to Local Storage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const addToCart = (item, quantity = 1) => {
     setCartItems((prevItems) => {
@@ -36,14 +49,16 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = (title) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.title !== title));
+    setCartItems((prevItems) =>
+      prevItems.filter((item) => item.title !== title)
+    );
   };
 
   const getCartItemQuantity = (title) => {
     const item = cartItems.find((item) => item.title === title);
     return item ? item.quantity : 0;
   };
-  
+
   const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
@@ -52,7 +67,7 @@ export const CartProvider = ({ children }) => {
         cartItems,
         addToCart,
         updateCartItemQuantity,
-        removeFromCart, // اضافه کردن تابع حذف به context
+        removeFromCart,
         getCartItemQuantity,
         totalItems,
         isItemAdded,
